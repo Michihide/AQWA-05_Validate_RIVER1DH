@@ -1,0 +1,29 @@
+# Hii_202107 (斐伊川 2021年7月豪雨) の観測所 vs RIVER1DH ソルバー結果の比較設定。
+#
+# 別の実行結果 (例: 期間の長い Hii_202107_riv) と比較したい場合は、このファイルを
+# コピーして result_dir / waterlevel_csv / output_dir を書き換えるだけでよい。
+# river_point.gpkg のパスはハードコードしない: 対象の timeseries CSV の1行目に
+# ソルバー自身が書き出したパスが入っているので、そこから自動的に解決する。
+
+event_name: Hii_202107_coupled_test
+
+# 03_Result/<event_name>/ 以下を想定 (このツールのルートディレクトリ
+# 05_Validate_RIVER1DH/ からの相対パス)
+result_dir: ../03_Result/Hii_202107_coupled_test
+waterlevel_csv: timeseries_of_waterlevel_river1dh.csv
+# 流量比較用 (省略すると流量比較はスキップされ、水位比較のみ実行される)
+discharge_csv: timeseries_of_discharge_river1dh.csv
+
+# Download_WIS の出力ディレクトリ (station CSV / timeseries/<id>.csv が入っている)
+wis_output_dir: ../../Download_WIS/output
+
+# 比較対象とする水系 (Download_WIS の water_system 列と一致させる)
+water_system: 斐伊川
+
+match:
+  # 観測所から最も近い断面点までの距離がこれを超える場合、その観測所は
+  # 「半径 max_distance_m 以内に断面点(≒観測所)が無い」として比較対象から除外する
+  # (unmatched_stations.csv に記録される)
+  max_distance_m: 200
+
+output_dir: output/Hii_202107_coupled_test
