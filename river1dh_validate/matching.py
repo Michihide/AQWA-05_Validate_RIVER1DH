@@ -47,6 +47,29 @@ class WisStation:
     lon: Optional[float]
     gauge_zero_m: Optional[float]
     is_active: bool
+    flood_watch_level_m: Optional[float] = None
+    flood_advisory_level_m: Optional[float] = None
+    evacuation_judgment_level_m: Optional[float] = None
+    flood_danger_level_m: Optional[float] = None
+    design_high_water_level_m: Optional[float] = None
+
+    def reference_water_levels_tp(self) -> list[tuple[str, float]]:
+        """観測所メタデータのレベル水位 (零点高基準) を T.P. 標高に変換して返す。"""
+        if self.gauge_zero_m is None:
+            return []
+        levels: list[tuple[str, float]] = []
+        specs = (
+            ("水防団待機", self.flood_watch_level_m),
+            ("氾濫注意", self.flood_advisory_level_m),
+            ("避難判断", self.evacuation_judgment_level_m),
+            ("氾濫危険", self.flood_danger_level_m),
+            ("計画高水位", self.design_high_water_level_m),
+        )
+        for label, rel_m in specs:
+            if rel_m is None:
+                continue
+            levels.append((label, self.gauge_zero_m + rel_m))
+        return levels
 
 
 @dataclass

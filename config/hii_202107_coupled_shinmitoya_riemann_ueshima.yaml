@@ -1,0 +1,16 @@
+# Hii_202107_coupled_shinmitoya_riemann_ueshima — 三刀屋川 KP2.6 切り詰め + 連成
+# 斐伊川下流(上島)を種別7(リーマン不変量水位)、三刀屋川上流(新三刀屋)を種別2(HLL整合)のまま
+
+event_name: Hii_202107_coupled_shinmitoya_riemann_ueshima
+
+result_dir: ../03_Result/Hii_202107_riv_shinmitoya_riemann_ueshima_nolat
+waterlevel_csv: timeseries_of_waterlevel_river1dh.csv
+discharge_csv: timeseries_of_discharge_river1dh.csv
+
+wis_output_dir: ../../Download_WIS/output
+water_system: 斐伊川
+
+match:
+  max_distance_m: 200
+
+output_dir: output/Hii_202107_coupled_shinmitoya_riemann_ueshima

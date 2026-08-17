@@ -1,0 +1,15 @@
+# Kuma_Hitoyoshi_202007_coupled — 球磨川 2020年7月 内外水連成 vs WIS 水位
+
+event_name: Kuma_Hitoyoshi_202007_coupled
+
+result_dir: ../03_Result/Kuma_Hitoyoshi_202007_coupled
+waterlevel_csv: timeseries_of_waterlevel_river1dh.csv
+discharge_csv: timeseries_of_discharge_river1dh.csv
+
+wis_output_dir: ../../Download_WIS/output
+water_system: 球磨川
+
+match:
+  max_distance_m: 200
+
+output_dir: output/Kuma_Hitoyoshi_202007_coupled

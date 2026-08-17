@@ -58,6 +58,26 @@ def plot_comparison(
             linewidth=1,
         )
 
+    if variable == "waterlevel":
+        level_styles = (
+            ("水防団待機", "gold", ":"),
+            ("氾濫注意", "darkorange", "--"),
+            ("避難判断", "crimson", "--"),
+            ("氾濫危険", "darkred", "-."),
+            ("計画高水位", "purple", "-."),
+        )
+        style_by_label = {label: (color, ls) for label, color, ls in level_styles}
+        for label, wl_tp in station.reference_water_levels_tp():
+            color, ls = style_by_label.get(label, ("gray", "--"))
+            ax.axhline(
+                wl_tp,
+                color=color,
+                linestyle=ls,
+                linewidth=1.2,
+                alpha=0.85,
+                label=f"{label} ({wl_tp:.2f} m)",
+            )
+
     kp_label = f"KP={match.kp:.1f}" if match.kp is not None else "KP=?"
     title = f"{station.station_name} ({station.station_id}) — {station.river_name} {kp_label}"
     ax.set_xlabel("Time (JST)")

@@ -1,0 +1,15 @@
+# Hii_202107_coupled_test7 — RRI_only 支川 + WIS 本川水位 + 構造物なし + 連成
+
+event_name: Hii_202107_coupled_test7
+
+result_dir: ../03_Result/Hii_202107_coupled_test7
+waterlevel_csv: timeseries_of_waterlevel_river1dh.csv
+discharge_csv: timeseries_of_discharge_river1dh.csv
+
+wis_output_dir: ../../Download_WIS/output
+water_system: 斐伊川
+
+match:
+  max_distance_m: 200
+
+output_dir: output/Hii_202107_coupled_test7

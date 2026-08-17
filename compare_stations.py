@@ -34,6 +34,7 @@ import pandas as pd
 from river1dh_validate import metrics as metrics_mod
 from river1dh_validate import scoring, solver_io, wis_io
 from river1dh_validate.config import load_config
+from river1dh_validate.export_gpkg import export_matched_stations_gpkg
 from river1dh_validate.matching import match_all, results_to_frames
 from river1dh_validate.plotting import plot_comparison
 
@@ -115,8 +116,8 @@ def run(config_path: str) -> int:
     logger.info("event=%s result_dir=%s", config.event_name, config.result_dir)
 
     waterlevel_csv_path = config.waterlevel_csv_path
-    if not waterlevel_csv_path.exists():
-        logger.error("ソルバー出力CSVが見つかりません: %s", waterlevel_csv_path)
+    if not waterlevel_csv_path.exists() and not solver_io.has_river_archive(config.result_dir):
+        logger.error("ソルバー出力CSV / GPKG.zip が見つかりません: %s", waterlevel_csv_path)
         return 1
 
     river_points = solver_io.load_river_points(waterlevel_csv_path)
@@ -197,6 +198,15 @@ def run(config_path: str) -> int:
     print(f"score table -> {score_table_png_path}")
     print(f"plots -> {plots_dir}")
 
+    matched_gpkg_path = config.output_dir / "matched_stations.gpkg"
+    export_matched_stations_gpkg(
+        matched_results,
+        metrics_df,
+        matched_gpkg_path,
+        river_points.crs,
+    )
+    print(f"matched stations gpkg -> {matched_gpkg_path}")
+
     # --- 流量比較 (discharge_csv が設定されている場合のみ) -----------------
     # マッチング (観測所 <-> 断面点 i_ID) は変量によらず共通のため、水位で
     # 計算した matched_results (= results から matched=True のみ抽出したもの)
@@ -204,8 +214,8 @@ def run(config_path: str) -> int:
     discharge_csv_path = config.discharge_csv_path
     if discharge_csv_path is None:
         logger.info("discharge_csv が未設定のため、流量比較はスキップします。")
-    elif not discharge_csv_path.exists():
-        logger.warning("流量ソルバー出力CSVが見つからないため、流量比較はスキップします: %s", discharge_csv_path)
+    elif not discharge_csv_path.exists() and not solver_io.has_river_archive(config.result_dir):
+        logger.warning("流量ソルバー出力CSV / GPKG.zip が見つからないため、流量比較はスキップします: %s", discharge_csv_path)
     else:
         discharge_sim_df = solver_io.load_discharge_timeseries(discharge_csv_path)
         discharge_sim_start = discharge_sim_df["time_jst"].min()

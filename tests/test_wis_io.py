@@ -41,6 +41,30 @@ def test_load_stations_filters_by_water_system_and_parses_optional_floats(tmp_pa
     assert s1.is_active is True
 
 
+def test_reference_water_levels_tp_converts_gauge_relative_levels():
+    station = WisStation(
+        station_id="S1",
+        station_name="test",
+        river_name="斐伊川",
+        water_system="斐伊川",
+        lat=35.0,
+        lon=132.0,
+        gauge_zero_m=100.0,
+        is_active=True,
+        flood_watch_level_m=2.0,
+        flood_advisory_level_m=3.5,
+        evacuation_judgment_level_m=None,
+        flood_danger_level_m=4.0,
+        design_high_water_level_m=5.0,
+    )
+    levels = dict(station.reference_water_levels_tp())
+    assert levels["水防団待機"] == 102.0
+    assert levels["氾濫注意"] == 103.5
+    assert "避難判断" not in levels
+    assert levels["氾濫危険"] == 104.0
+    assert levels["計画高水位"] == 105.0
+
+
 def make_station(gauge_zero_m=36.97):
     return WisStation(
         station_id="S1",

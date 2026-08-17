@@ -6,4 +6,4 @@ venv/
 .DS_Store
 
 # 実行結果 (再生成可)
-output/*/
+output/

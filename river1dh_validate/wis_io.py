@@ -47,6 +47,15 @@ def load_stations(wis_output_dir: Path, water_system: str) -> list:
                     lon=_to_float(row.get("longitude_wgs84", "")),
                     gauge_zero_m=_to_float(row.get("detail_gauge_zero_m", "")),
                     is_active=(row.get("is_active", "").strip().upper() == "TRUE"),
+                    flood_watch_level_m=_to_float(row.get("flood_watch_level_m", "")),
+                    flood_advisory_level_m=_to_float(row.get("flood_advisory_level_m", "")),
+                    evacuation_judgment_level_m=_to_float(
+                        row.get("evacuation_judgment_level_m", "")
+                    ),
+                    flood_danger_level_m=_to_float(row.get("flood_danger_level_m", "")),
+                    design_high_water_level_m=_to_float(
+                        row.get("design_high_water_level_m", "")
+                    ),
                 )
             )
     return stations

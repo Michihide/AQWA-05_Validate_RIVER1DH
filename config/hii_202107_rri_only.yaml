@@ -1,0 +1,15 @@
+# 本川下流端以外 RRI 流量境界（未捕捉6河川は 0）
+
+event_name: Hii_202107_rri_only
+
+result_dir: ../03_Result/Hii_202107_rri_only
+waterlevel_csv: timeseries_of_waterlevel_river1dh.csv
+discharge_csv: timeseries_of_discharge_river1dh.csv
+
+wis_output_dir: ../../Download_WIS/output
+water_system: 斐伊川
+
+match:
+  max_distance_m: 200
+
+output_dir: output/Hii_202107_rri_only

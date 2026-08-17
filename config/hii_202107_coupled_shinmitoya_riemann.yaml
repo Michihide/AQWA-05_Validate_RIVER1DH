@@ -1,0 +1,15 @@
+# Hii_202107_coupled_shinmitoya_riemann — 三刀屋川 KP2.6 切り詰め + 新三刀屋 WIS BC(リーマン不変量水位境界, 種別7) + 連成
+
+event_name: Hii_202107_coupled_shinmitoya_riemann
+
+result_dir: ../03_Result/Hii_202107_riv_shinmitoya_riemann_nolat
+waterlevel_csv: timeseries_of_waterlevel_river1dh.csv
+discharge_csv: timeseries_of_discharge_river1dh.csv
+
+wis_output_dir: ../../Download_WIS/output
+water_system: 斐伊川
+
+match:
+  max_distance_m: 200
+
+output_dir: output/Hii_202107_coupled_shinmitoya_riemann

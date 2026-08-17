@@ -125,7 +125,10 @@ def _compute_volume_m3(series: pd.Series) -> Optional[float]:
     if len(series) < 2:
         return None
     seconds = (series.index - series.index[0]).total_seconds().to_numpy()
-    trapz_fn = getattr(np, "trapezoid", np.trapz)
+    if hasattr(np, "trapezoid"):
+        trapz_fn = np.trapezoid
+    else:
+        trapz_fn = np.trapz
     return float(trapz_fn(series.to_numpy(), x=seconds))
 
 
